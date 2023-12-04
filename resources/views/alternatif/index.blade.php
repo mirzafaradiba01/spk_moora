@@ -42,7 +42,7 @@
                                     @foreach ($alternatif as $a)
                                     <tr>
                                         <td>{{ ++$i }}</td>
-                                        <td>{{ $a->name}}</td>
+                                        <td>{{ $a->nama}}</td>
                                         <td>
                                             <form action="{{ route('alternatif.destroy',$a->id) }}" method="POST">
                                                 @csrf

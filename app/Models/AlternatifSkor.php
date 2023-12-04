@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class alternatif extends Model
+class AlternatifSkor extends Model
 {
     use HasFactory;
 
-    protected $table = 'alternatif';
+    protected $table = 'alternatifskor';
 
-    protected $fillable =[
-        'nama'
+    protected $fillable = [
+        'alternatif_id',
+        'kriteriabobot_id',
     ];
 }
