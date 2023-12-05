@@ -1,4 +1,4 @@
-@extends('template.index')
+@extends('layouts.index')
 @section('content')
 <div class="content-wrapper">
     <div class="content-header">
@@ -33,7 +33,7 @@
                                         <td>{{ ++$i }}</td>
                                         <td>{{$a->nama}}</td>
                                         @php
-                                        $scr = $scores->where('ida', $a->id)->all();
+                                        $scr = $score->where('ida', $a->id)->all();
                                         @endphp
                                         @foreach ($scr as $s)
                                         <td>{{$s->score}}</td>
