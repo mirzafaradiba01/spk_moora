@@ -37,7 +37,7 @@
                 
                 <li class="nav-header">Hasil</li>
                 <li class="nav-item">
-                    <a href="{{ url('decision') }}" class="nav-link">
+                    <a href="{{ url('decisionmatrix') }}" class="nav-link">
                         <i class="nav-icon fas fa-table"></i>
                         <p>
                             Matriks Keputusan

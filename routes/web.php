@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlternatifController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DecisionMatrixController;
 use App\Http\Controllers\KriteriabobotController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,5 +26,10 @@ Route::get('/', [DashboardController::class, 'index']);
 Route::resources([
     'alternatif' => AlternatifController::class,
     'kriteriabobot' => KriteriabobotController::class,
+    'decisionmatrix' => DecisionMatrixController::class,
+
 ]);
+
+
+
 

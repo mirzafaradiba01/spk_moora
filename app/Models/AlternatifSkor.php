@@ -21,4 +21,10 @@ class AlternatifSkor extends Model
     {
         return $this->belongsTo(KriteriaBobotModel::class, 'kriteriabobot_id');
     }
+
+    public function alternatif()
+    {
+        return $this->belongsTo(AlternatifModel::class, 'ida', 'id');
+    }
+
 }

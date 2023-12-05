@@ -17,4 +17,9 @@ class KriteriaBobotModel extends Model
         'bobot',
         'description'
     ];
+
+    public function alternatifSkor()
+    {
+        return $this->hasMany(AlternatifSkor::class, 'kriteriabobot_id');
+    }
 }

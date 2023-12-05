@@ -23,12 +23,11 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            Sistem ini dapat membantu seseorang untuk mengambil keputusan dengan menggunakan Metode MOORA dan ORESTE.
+                            Sistem ini dapat membantu seseorang untuk mengambil keputusan dengan menggunakan Metode MOORA.
                             <br> Cara Penggunaan:
                             <ol>
                                 <li>Masuk ke menu "Kriteria & Bobot" untuk menambahkan kriteria beserta bobotnya.</li>
-                                <li>Kemudian masuk ke menu "Rating Kriteria" untuk memberikan pilihan rating pada masing-masing kriteria.</li>
-                                <li>Gunakan menu "Alternatif & Skor" untuk menambahkan alternatif dan ratingnya.</li>
+                                <li>Gunakan menu "Alternatif & Skor" untuk menambahkan alternatif dan nilai skornya.</li>
                                 <li>Cek menu "Ranking" untuk melihat hasilnya.</li>
                             </ol>
                         </div>

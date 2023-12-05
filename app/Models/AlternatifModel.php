@@ -14,4 +14,10 @@ class AlternatifModel extends Model
     protected $fillable =[
         'nama'
     ];
+    
+    public function alternatifSkor()
+    {
+        return $this->hasMany(AlternatifSkor::class, 'alternatif_id');
+    }
+
 }
