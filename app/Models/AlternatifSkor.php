@@ -14,5 +14,11 @@ class AlternatifSkor extends Model
     protected $fillable = [
         'alternatif_id',
         'kriteriabobot_id',
+        'score',
     ];
+
+    public function kriteriabobot()
+    {
+        return $this->belongsTo(KriteriaBobotModel::class, 'kriteriabobot_id');
+    }
 }

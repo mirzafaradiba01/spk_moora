@@ -19,14 +19,6 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('alternatif') }}" class="nav-link">
-                        <i class="nav-icon fas fa-cube"></i>
-                        <p>
-                            Alternatif
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a href="{{ url('kriteriabobot') }}" class="nav-link">
                         <i class="nav-icon fas fa-cube"></i>
                         <p>
@@ -35,13 +27,14 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('penilaian') }}" class="nav-link">
-                        <i class="nav-icon fas fa-database"></i>
+                    <a href="{{ url('alternatif') }}" class="nav-link">
+                        <i class="nav-icon fas fa-cube"></i>
                         <p>
-                            Penilaian
+                            Alternatif & Penilaian
                         </p>
                     </a>
                 </li>
+                
                 <li class="nav-header">Hasil</li>
                 <li class="nav-item">
                     <a href="{{ url('decision') }}" class="nav-link">

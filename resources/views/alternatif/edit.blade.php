@@ -38,10 +38,10 @@
                                 </div>
                                 @foreach ($kriteriabobot as $key => $k)
                                     <div class="form-group">
-                                        <label for="nama[{{ $k->id }}]">{{ $k->nama }} - {{ $k->description }}</label>
-                                        <select class="form-control" id="nama[{{ $k->id }}]" name="nama[{{ $k->id }}]">
+                                        <label for="score[{{ $k->id }}]">{{ $k->nama }} - {{ $k->description }}</label>
+                                        <select class="form-control" id="score[{{ $k->id }}]" name="score[{{ $k->id }}]">
                                             @for ($i = 1; $i <= 5; $i++)
-                                                <option value="{{ $i }}" {{ isset($alternatifskor[$key]) && $i == $alternatifskor[$key]->value ? 'selected' : '' }}>{{ $i }}</option>
+                                                <option value="{{ $i }}" {{ isset($alternatifskor[$key]) && $i == $alternatifskor[$key]->score ? 'selected' : '' }}>{{ $i }}</option>
                                             @endfor
                                         </select>
                                     </div>

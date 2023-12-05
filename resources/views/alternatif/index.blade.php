@@ -35,6 +35,9 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama</th>
+                                        @foreach ($kriteriabobot as $c)
+                                        <th>{{$c->nama}}</th>
+                                        @endforeach
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -43,6 +46,13 @@
                                     <tr>
                                         <td>{{ ++$i }}</td>
                                         <td>{{ $a->nama}}</td>
+                                        @foreach ($kriteriabobot as $k)
+                                            @php
+                                                // Menggunakan method first() untuk mendapatkan objek pertama yang cocok
+                                                $s = $scores->where('ida', $a->id)->where('idk', $k->id)->first();
+                                            @endphp
+                                            <td>{{ $s ? $s->score : '' }}</td>
+                                        @endforeach
                                         <td>
                                             <form action="{{ route('alternatif.destroy',$a->id) }}" method="POST">
                                                 @csrf
@@ -71,6 +81,7 @@
     </div>
 </div>
 @endsection
+
 @section('script')
 <script>
     $(function () {

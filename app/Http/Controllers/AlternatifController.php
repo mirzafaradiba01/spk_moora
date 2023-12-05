@@ -20,6 +20,7 @@ class AlternatifController extends Controller
             'alternatifskor.id as id',
             'alternatif.id as ida',
             'kriteriabobot.id as idk',
+            'alternatifskor.score as score',
             'kriteriabobot.nama as nama',
             'kriteriabobot.tipe as tipe',
             'kriteriabobot.bobot as bobot',
@@ -53,32 +54,30 @@ class AlternatifController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'nama' => 'required'
-        ]);
+{
+    $request->validate([
+        'nama' => 'required'
+    ]);
 
-        // Menyimpan alternatif
-        $alt = new AlternatifModel;
-        $alt->nama = $request->nama;
-        $alt->save();
+    // Menyimpan alternatif
+    $alt = new AlternatifModel;
+    $alt->nama = $request->nama;
+    $alt->save();
 
-        //Menyimpan skor
-        $kriteriabobot = KriteriaBobotModel::get();
-        foreach ($kriteriabobot as $k) {
-            $score = new AlternatifSkor();
-            $score->alternatif_id = $alt->id;
-            $score->kriteriabobot_id = $k->id;
-            $score->save();
-        }
-
-        // AlternatifModel::create($request->all());
-
-        return redirect()->route('alternatif.index')
-                        ->with('success','alternatif created successfully.');
-        
-
+    // Menyimpan skor
+    $kriteriabobot = KriteriaBobotModel::get();
+    foreach ($kriteriabobot as $k) {
+        $score = new AlternatifSkor();
+        $score->alternatif_id = $alt->id;
+        $score->kriteriabobot_id = $k->id;
+        $score->score = 0; // Set a default value, change as needed
+        $score->save();
     }
+
+    return redirect()->route('alternatif.index')
+                    ->with('success', 'Alternatif created successfully.');
+}
+
 
     /**
      * Display the specified resource.
@@ -113,28 +112,39 @@ class AlternatifController extends Controller
      * @param  \App\Models\AlternatifModel  $alternatif
      * @return \Illuminate\Http\Response
      */
+    // Metode update
     public function update(Request $request, AlternatifModel $alternatif)
     {
+        // Validasi
+        $request->validate([
+            'nama.*' => 'required',
+            'score' => 'required|array',
+            'score.*' => 'required|numeric',
+        ]);
+    
         // Menyimpan Skor
-        $scores = AlternatifSkor::where('alternatif_id', $alternatif->id)->get();
         $kriteribobot = KriteriaBobotModel::get();
-
-        foreach ($kriteribobot as $key => $k) {
-            if (isset($request->nama[$k->id])) {
-                $scores[$key]->kriteriabobot_id = $request->nama[$k->id];
-                $scores[$key]->save();
-            } else {
-                // Jika tidak ada nilai yang dipilih, sesuaikan dengan logika aplikasi Anda
-                // Contoh: $scores[$key]->kriteriabobot_id = 0; atau sesuaikan dengan kebutuhan aplikasi lainnya
-            }
+    
+        foreach ($kriteribobot as $k) {
+            $score = AlternatifSkor::updateOrCreate(
+                [
+                    'alternatif_id' => $alternatif->id,
+                    'kriteriabobot_id' => $k->id,
+                ],
+                [
+                    'score' => $request->score[$k->id] ?? 0,
+                ]
+            );
         }
-
-        // Lainnya sesuai kebutuhan, seperti validasi dan lain-lain
-        // ...
-
-        return redirect()->route('alternatif.index')
-                        ->with('success', 'Alternatif berhasil diperbarui');
+    
+        return redirect()->route('alternatif.index')->with('success', 'Alternatif berhasil diperbarui');
     }
+    
+
+
+
+
+
 
 
     /**
