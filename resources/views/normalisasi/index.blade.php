@@ -23,7 +23,7 @@
                                         <th>No</th>
                                         <th>Alternatif</th>
                                         @foreach ($kriteriabobot as $c)
-                                        <th>{{$c->nama}}</th>
+                                            <th>{{$c->nama}}</th>
                                         @endforeach
                                     </tr>
                                 </thead>
@@ -32,11 +32,8 @@
                                     <tr>
                                         <td>{{ ++$i }}</td>
                                         <td>{{$a->nama}}</td>
-                                        @php
-                                        $scr = $score->where('ida', $a->id)->all();
-                                        @endphp
-                                        @foreach ($scr as $s)
-                                        <td>{{$s->score}}</td>
+                                        @foreach ($scores->where('ida', $a->id) as $s)
+                                            <td>{{$s->score}}</td>
                                         @endforeach
                                     </tr>
                                     @endforeach

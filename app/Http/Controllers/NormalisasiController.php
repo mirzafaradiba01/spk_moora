@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alternatif;
 use App\Models\AlternatifModel;
 use App\Models\AlternatifSkor;
 use App\Models\KriteriaBobotModel;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NormalisasiController extends Controller
 {
@@ -13,11 +14,12 @@ class NormalisasiController extends Controller
     {
         try {
             // Mengambil semua skor alternatif beserta informasi terkait
-            $score = AlternatifSkor::select(
+            $scores = AlternatifSkor::select(
                 'alternatifskor.id as ids',
                 'alternatif.id as ida',
                 'kriteriabobot.id as idk',
                 'alternatifskor.score as score',
+                'alternatif.nama as nama',
                 'kriteriabobot.nama as nama',
                 'kriteriabobot.tipe as tipe',
                 'kriteriabobot.bobot as bobot',
@@ -27,62 +29,35 @@ class NormalisasiController extends Controller
                 ->leftJoin('kriteriabobot', 'kriteriabobot.id', '=', 'alternatifskor.kriteriabobot_id')
                 ->get();
 
-            // Mengambil semua alternatif
-            $alternatif = AlternatifModel::get();
-
-            // Mengambil semua bobot kriteria
+            // Mengambil semua kriteria bobot
             $kriteriabobot = KriteriaBobotModel::get();
 
-            // Normalisasi
-            foreach ($alternatif as $a) {
-                // Mengambil semua skor untuk setiap id alternatif
-                $afilter = $score->where('ida', $a->id)->values()->all();
+            // Mengambil semua alternatif (you may need to adjust this based on your model)
+            $alternatif = AlternatifModel::get();
 
-                // Looping setiap kriteria
-                foreach ($kriteriabobot as $icw => $cw) {
-                    // Menggunakan filter untuk menghilangkan nilai null
-                    $rates = $score
-                        ->filter(function ($val) use ($cw) {
-                            return $cw->id == $val->idk;
-                        })
-                        ->map->score // Mengambil nilai score setelah filter
-                        ->values() // Mengatur ulang kembali array keys
-                        ->toArray();
+            // Array untuk menyimpan total kuadrat setiap kriteria
+            $totalKuadrat = [];
 
-                    // Menghapus nilai null yang dihasilkan oleh map,
-                    // Mengindeks ulang array
-                    $rates = array_values(array_filter($rates));
-
-                    $total = 0;
-                    foreach ($rates as $value) {
-                        $total += pow($value, 2);
-                    }
-
-                    $sqrt = sqrt($total);
-
-                    // Pengecekan sebelum melakukan pembagian
-                    if ($sqrt != 0) {
-                        // Pengecekan apakah $afilter[$icw] tidak null
-                        if (isset($afilter[$icw])) {
-                            $normalisasi = $afilter[$icw]->score / $sqrt;
-                            $result = number_format($normalisasi, 2, '.', '');
-                            $afilter[$icw]->score = $result;
-                        } else {
-                            // Handle jika $afilter[$icw] bernilai null
-                            // Misalnya, berikan nilai default atau lakukan tindakan yang sesuai
-                            // Contoh: throw new \Exception("Data skor alternatif tidak sesuai untuk alternatif $a->id");
-                        }
-                    } else {
-                        // Handle jika pembagian oleh nol terjadi
-                        // Misalnya, berikan nilai default atau lakukan tindakan yang sesuai
-                        if (isset($afilter[$icw])) {
-                            $afilter[$icw]->score = 0;
-                        }
-                    }
-                }
+            // Perhitungan total kuadrat untuk setiap kriteria
+            foreach ($kriteriabobot as $kriteria) {
+                $totalKuadrat[$kriteria->id] = AlternatifSkor::where('kriteriabobot_id', $kriteria->id)
+                    ->sum(DB::raw('POWER(score, 2)'));
             }
 
-            return view('normalisasi.index', compact('score', 'alternatif', 'kriteriabobot'))->with('i', 0);
+            // Array untuk menyimpan akar kuadrat dari total kuadrat
+            $akarKuadrat = [];
+
+            // Perhitungan akar kuadrat dari total kuadrat
+            foreach ($totalKuadrat as $kriteriaId => $total) {
+                $akarKuadrat[$kriteriaId] = sqrt($total);
+            }
+
+            // Normalisasi Moora
+            foreach ($scores as $skor) {
+                $skor->score = round(($akarKuadrat[$skor->idk] != 0) ? $skor->score / $akarKuadrat[$skor->idk] : 0, 2);
+            }
+
+            return view('normalisasi.index', compact('scores', 'kriteriabobot', 'alternatif'))->with('i', 0);
         } catch (\Exception $e) {
             // Handle exception
             return response()->json(['error' => $e->getMessage()], 500);
