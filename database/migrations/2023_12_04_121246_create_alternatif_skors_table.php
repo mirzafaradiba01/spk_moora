@@ -20,6 +20,8 @@ class CreateAlternatifSkorsTable extends Migration
             
             $table->unsignedBigInteger('kriteriabobot_id');
             $table->foreign('kriteriabobot_id')->references('id')->on('kriteriabobot');
+
+            $table->float('score');
             $table->timestamps();
         });
     }
