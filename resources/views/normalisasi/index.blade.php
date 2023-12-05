@@ -1,5 +1,4 @@
-@extends('layouts.index')
-
+@extends('template.index')
 @section('content')
 <div class="content-wrapper">
     <div class="content-header">
@@ -23,8 +22,8 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Alternatif</th>
-                                        @foreach ($kriteriabobot as $k)
-                                        <th>{{$k->nama}}</th>
+                                        @foreach ($kriteriabobot as $c)
+                                        <th>{{$c->nama}}</th>
                                         @endforeach
                                     </tr>
                                 </thead>
@@ -32,12 +31,12 @@
                                     @foreach ($alternatif as $a)
                                     <tr>
                                         <td>{{ ++$i }}</td>
-                                        <td>{{$alternatif->nama}}</td>
+                                        <td>{{$a->nama}}</td>
                                         @php
-                                        $alternatifskor = $score->where('alternatif_id', $alternatif->id)->all();
+                                        $scr = $scores->where('ida', $a->id)->all();
                                         @endphp
-                                        @foreach ($alternatifskor as $score)
-                                        <td>{{$score->score}}</td>
+                                        @foreach ($scr as $s)
+                                        <td>{{$s->score}}</td>
                                         @endforeach
                                     </tr>
                                     @endforeach
@@ -51,7 +50,6 @@
     </div>
 </div>
 @endsection
-
 @section('script')
 <script>
     $(function () {
