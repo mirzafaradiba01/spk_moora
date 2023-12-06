@@ -5,9 +5,7 @@
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Ranking</h1>
-                </div>
+               
                 <div class="col-sm-6"></div>
             </div>
         </div>
@@ -18,6 +16,9 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-body">
+                            
+                                <h2 class="m-0">Perankingan</h2>
+                            
                             <table id="rankingTable" class="display nowrap table table-striped table-bordered">
                                 <thead>
                                     <tr>

@@ -38,14 +38,14 @@ class NormalisasiController extends Controller
             // Memanggil fungsi untuk normalisasi Moora
             $normalizedScores = $this->normalisasiMoora($scores, $kriteriabobot);
 
-            $optimizationResults = $this->optimizedMoora($normalizedScores, $kriteriabobot);
+            $normTerbobotResults = $this->normTerbobotMoora($normalizedScores, $kriteriabobot);
 
             // Menghitung nilai akhir
-            $hitungNilaiAkhir = $this->hitungNilaiAkhir($optimizationResults, $alternatif, $kriteriabobot);
+            $hitungNilaiAkhir = $this->hitungNilaiAkhir($normTerbobotResults, $alternatif, $kriteriabobot);
             $hitungYi = $this->hitungYi($hitungNilaiAkhir);
 
 
-            return view('normalisasi.index', compact('scores', 'kriteriabobot', 'alternatif', 'normalizedScores', 'optimizationResults', 'hitungNilaiAkhir','hitungYi'))->with('i', 0);
+            return view('normalisasi.index', compact('scores', 'kriteriabobot', 'alternatif', 'normalizedScores', 'normTerbobotResults', 'hitungNilaiAkhir','hitungYi'))->with('i', 0);
         } catch (\Exception $e) {
             // Handle exception
             return response()->json(['error' => $e->getMessage()], 500);
@@ -86,15 +86,15 @@ class NormalisasiController extends Controller
         return $normalizedScores;
     }
 
-    public function optimizedMoora($normalizedScores, $kriteriabobot)
+    public function normTerbobotMoora($normalizedScores, $kriteriabobot)
     {
         try {
-            $optimizationResults = [];
+            $normTerbobotResults = [];
 
             // Iterate through each alternatif
             foreach ($normalizedScores as $alternatifId => $normalizedScoresPerAlternatif) {
-                // Initialize the total optimization for the current alternatif
-                $totalOptimization = 0;
+                // Initialize the total normTerbobot for the current alternatif
+                $totalnormTerbobot = 0;
 
                 // Iterate through each kriteria
                 foreach ($normalizedScoresPerAlternatif as $kriteriaId => $normalizedScore) {
@@ -103,29 +103,29 @@ class NormalisasiController extends Controller
 
                     // Ensure the kriteria ID is valid
                     if ($bobot !== null) {
-                        // Calculate the optimization value for the current kriteria
-                        $optimizationValue = $normalizedScore * $bobot;
+                        // Calculate the normTerbobot value for the current kriteria
+                        $normTerbobotValue = $normalizedScore * $bobot;
 
-                        // Accumulate the optimization values for each kriteria
-                        $totalOptimization += $optimizationValue;
+                        // Accumulate the normTerbobot values for each kriteria
+                        $totalnormTerbobot += $normTerbobotValue;
 
-                        // Optionally, you can store the formatted optimization values in an array
-                        $optimizationResults[$alternatifId][$kriteriaId] = number_format($optimizationValue, 2);
+                        // Optionally, you can store the formatted normTerbobot values in an array
+                        $normTerbobotResults[$alternatifId][$kriteriaId] = number_format($normTerbobotValue, 2);
                     }
                 }
 
-                // // Store the total optimization value for the current alternatif
-                // $optimizationResults[$alternatifId]['totalOptimization'] = number_format($totalOptimization, 2);
+                // // Store the total normTerbobot value for the current alternatif
+                // $normTerbobotResults[$alternatifId]['totalnormTerbobot'] = number_format($totalnormTerbobot, 2);
             }
 
-            return $optimizationResults;
+            return $normTerbobotResults;
         } catch (\Exception $e) {
             // Handle exception if needed
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 
-    public function hitungNilaiAkhir($optimizationResults, $alternatif, $kriteriabobot)
+    public function hitungNilaiAkhir($normTerbobotResults, $alternatif, $kriteriabobot)
 {
     $hitungNilaiAkhir = [
         'benefit' => [],
@@ -133,23 +133,23 @@ class NormalisasiController extends Controller
     ];
 
     // Iterasi melalui setiap alternatif
-    foreach ($optimizationResults as $alternatifId => $optimizationData) {
+    foreach ($normTerbobotResults as $alternatifId => $normTerbobotData) {
         // Pastikan bahwa ID alternatif ada dalam array $alternatif
         if ($alternatif->contains('id', $alternatifId)) {
             $finalValueB = 0;
             $finalValueC = 0;
 
-            foreach ($optimizationData as $kriteriaId => $optimizationValue) {
-                if ($kriteriaId !== 'totalOptimization') {
+            foreach ($normTerbobotData as $kriteriaId => $normTerbobotValue) {
+                if ($kriteriaId !== 'totalnormTerbobot') {
                     // Tentukan jenis kriteria (benefit atau cost)
                     $tipeKriteria = $kriteriabobot->where('id', $kriteriaId)->first()->tipe;
 
                     // Untuk kriteria benefit, tambahkan nilai optimisasi langsung
                     // Untuk kriteria cost, kurangkan nilai optimisasi langsung
                     if ($tipeKriteria == 'benefit') {
-                        $finalValueB += $optimizationValue;
+                        $finalValueB += $normTerbobotValue;
                     } elseif ($tipeKriteria == 'cost') {
-                        $finalValueC += $optimizationValue;
+                        $finalValueC += $normTerbobotValue;
                     }
                 }
             }
@@ -214,12 +214,12 @@ public function showRanking()
         $alternatif = AlternatifModel::get();
 
         $normalizedScores = $this->normalisasiMoora($scores, $kriteriabobot);
-        $optimizationResults = $this->optimizedMoora($normalizedScores, $kriteriabobot);
-        $hitungNilaiAkhir = $this->hitungNilaiAkhir($optimizationResults, $alternatif, $kriteriabobot);
+        $normTerbobotResults = $this->normTerbobotMoora($normalizedScores, $kriteriabobot);
+        $hitungNilaiAkhir = $this->hitungNilaiAkhir($normTerbobotResults, $alternatif, $kriteriabobot);
         $hitungYi = $this->hitungYi($hitungNilaiAkhir);
 
         // Pass the necessary data to the ranking view
-        return view('ranking', compact('scores', 'kriteriabobot', 'alternatif', 'normalizedScores', 'optimizationResults', 'hitungNilaiAkhir','hitungYi'));
+        return view('ranking', compact('scores', 'kriteriabobot', 'alternatif', 'normalizedScores', 'normTerbobotResults', 'hitungNilaiAkhir','hitungYi'));
     } catch (\Exception $e) {
         // Handle exception if needed
         return response()->json(['error' => $e->getMessage()], 500);

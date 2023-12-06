@@ -4,9 +4,7 @@
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Normalisasi</h1>
-                </div>
+                
                 <div class="col-sm-6"></div>
             </div>
         </div>
@@ -17,6 +15,7 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-body">
+                            <h2>Normalisasi</h2>
                             <table id="mytable" class="display nowrap table table-striped table-bordered">
                                 <thead>
                                     <tr>
@@ -49,6 +48,7 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-body">
+                            <h2>Normalisasi Terbobot</h2>
                             <table id="mytable" class="display nowrap table table-striped table-bordered">
                                 <thead>
                                     <tr>
@@ -64,7 +64,7 @@
                                     <tr>
                                        
                                         <td>{{$al->nama}}</td>
-                                        @foreach ($optimizationResults[$al->id] as $result)
+                                        @foreach ($normTerbobotResults[$al->id] as $result)
                                             <td>{{ $result }}</td>
                                         @endforeach
                                     </tr>
@@ -83,7 +83,7 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-body">
-                            <h2>Benefit Values</h2>
+                            <h2>Nilai Optimasi</h2>
                             <table id="mytable" class="display nowrap table table-striped table-bordered">
                                 <thead>
                                     <tr>
