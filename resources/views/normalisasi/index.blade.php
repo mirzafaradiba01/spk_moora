@@ -84,45 +84,37 @@
                     <div class="card">
                         <div class="card-body">
                             <h2>Benefit Values</h2>
-                            <table>
+                            <table id="mytable" class="display nowrap table table-striped table-bordered">
                                 <thead>
                                     <tr>
                                         <th>Alternatif</th>
-                                        <th>Benefit Value</th>
+                                        <th>MAX</th>
+                                        <th>MIN</th>
+                                        <th>Nilai Yi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($hitungNilaiAkhir['benefit'] as $alternatifId => $benefitValue)
-                                        @if (isset($alternatif[$alternatifId]))
-                                            <tr>
-                                                <td>{{ $alternatif[$alternatifId]->nama }}</td>
-                                                <td>{{ $benefitValue }}</td>
-                                            </tr>
-                                        @endif
+                                        <tr>
+                                            <td>{{ $alternatif->where('id', $alternatifId)->first->nama['nama'] }}</td>
+                                            <td>{{ $benefitValue }}</td>
+                                            <td>
+                                                @if (isset($hitungNilaiAkhir['cost'][$alternatifId]))
+                                                    {{ $hitungNilaiAkhir['cost'][$alternatifId] }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if (isset($hitungYi[$alternatifId]['yiValue']))
+                                                    {{ $hitungYi[$alternatifId]['yiValue'] }}
+                                                @endif
+                                            </td>
+                                            
+                                        </tr>
                                     @endforeach
                                 </tbody>
+                                
                             </table>
-                        
-                            <!-- Display Cost Values -->
-                            <h2>Cost Values</h2>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Alternatif</th>
-                                        <th>Cost Value</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($hitungNilaiAkhir['cost'] as $alternatifId => $costValue)
-                                        @if (isset($alternatif[$alternatifId]))
-                                            <tr>
-                                                <td>{{ $alternatif[$alternatifId]->nama }}</td>
-                                                <td>{{ $costValue }}</td>
-                                            </tr>
-                                        @endif
-                                    @endforeach
-                                </tbody>
-                            </table>
+                            
                         </div>
                     </div>
                 </div>

@@ -11,7 +11,7 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="{{ url('home') }}" class="nav-link">
+                    <a href="{{ url('dashboard') }}" class="nav-link">
                         <i class="nav-icon fas fa-home"></i>
                         <p>
                             Home
@@ -53,7 +53,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('rank') }}" class="nav-link">
+                    <a href="{{ url('ranking') }}" class="nav-link">
                         <i class="nav-icon fas fa-chart-line"></i>
                         <p>
                             Ranking

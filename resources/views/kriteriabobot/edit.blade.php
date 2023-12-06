@@ -39,15 +39,16 @@
                                 <div class="form-group">
                                     <label for="tipe">Tipe</label>
                                     <select class="form-control" id="tipe" name="tipe">
-                                        @if ($kriteriabobot->type == "benefit")
-                                        <option value="benefit" selected='selected'>Benefit</option>
-                                        <option value="cost">Cost</option>
+                                        @if ($kriteriabobot->tipe == "benefit")
+                                            <option value="benefit" selected='selected'>Benefit</option>
+                                            <option value="cost">Cost</option>
                                         @else
-                                        <option value="benefit">Benefit</option>
-                                        <option value="cost" selected='selected'>Cost</option>
+                                            <option value="benefit">Benefit</option>
+                                            <option value="cost" selected='selected'>Cost</option>
                                         @endif
                                     </select>
                                 </div>
+                                
                                 <div class="form-group">
                                     <label for="bobot">Bobot</label>
                                     <div class="input-group">

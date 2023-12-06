@@ -32,6 +32,7 @@ Route::resources([
 ]);
 
 Route::get('normalization', [NormalisasiController::class, 'index']);
+Route::get('/ranking', [NormalisasiController::class, 'showRanking']);
 
 
 
