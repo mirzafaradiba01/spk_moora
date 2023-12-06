@@ -30,7 +30,7 @@ Route::resources([
     'decisionmatrix' => DecisionMatrixController::class,
 
 ]);
-
+Route::get('/dashboard', [DashboardController::class, 'index']);
 Route::get('normalization', [NormalisasiController::class, 'index']);
 Route::get('/ranking', [NormalisasiController::class, 'showRanking']);
 

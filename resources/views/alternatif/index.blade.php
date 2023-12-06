@@ -26,9 +26,12 @@
                                 </button>
                             </div>
                             @endif
-                            <a href="{{route('alternatif.create')}}" class='btn btn-primary'>
-                                <span class='fa fa-plus'></span> Tambah Alternatif
-                            </a>
+                            <div>
+                                <a href="{{route('alternatif.create')}}" class='btn btn-outline-success'>
+                                    <span class='fa fa-plus'></span> Tambah Alternatif
+                                </a>
+                            </div>
+                           
                             <br>
                             <table id="mytable" class="display nowrap table table-striped table-bordered">
                                 <thead>
@@ -82,19 +85,3 @@
 </div>
 @endsection
 
-@section('script')
-<script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-        $('#mytable').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-        });
-    });
-</script>
-@endsection

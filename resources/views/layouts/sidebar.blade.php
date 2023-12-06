@@ -30,7 +30,7 @@
                     <a href="{{ url('alternatif') }}" class="nav-link">
                         <i class="nav-icon fas fa-cube"></i>
                         <p>
-                            Alternatif & Penilaian
+                            Alternatif & Skor
                         </p>
                     </a>
                 </li>
@@ -48,7 +48,7 @@
                     <a href="{{ url('normalization') }}" class="nav-link">
                         <i class="nav-icon far fa-chart-bar"></i>
                         <p>
-                            Normalisasi
+                            Perhitungan Moora
                         </p>
                     </a>
                 </li>
