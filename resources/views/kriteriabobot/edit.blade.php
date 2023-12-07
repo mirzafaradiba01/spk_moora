@@ -62,6 +62,7 @@
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Kirim</button>
+                                <a href="{{ route('kriteriabobot.index') }}" class="btn btn-secondary">Kembali</a>
                             </form>
                         </div>
                     </div>

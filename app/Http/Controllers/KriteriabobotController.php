@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\KriteriaBobotModel;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class KriteriabobotController extends Controller
@@ -35,9 +36,10 @@ class KriteriabobotController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+{
+    try {
         $request->validate([
-            'nama' => 'required',
+            'nama' => 'required|unique:kriteriabobot',
             'tipe' => 'required',
             'bobot' => 'required',
             'description' => 'required',
@@ -47,7 +49,18 @@ class KriteriabobotController extends Controller
 
         return redirect()->route('kriteriabobot.index')
                         ->with('success','Criteria created successfully.');
+    } catch (QueryException $e) {
+        if ($e->errorInfo[1] == 1062) {
+            // Error code 1062 is for duplicate entry
+            return redirect()->back()
+                             ->withInput()
+                             ->withErrors(['nama' => 'Nama kriteria sudah ada.']);
+        }
+        // Handle other query exceptions if needed
+        return redirect()->route('kriteriabobot.index')
+                        ->with('error','Failed to create criteria.');
     }
+}
 
     /**
      * Display the specified resource.

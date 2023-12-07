@@ -51,7 +51,21 @@
     <script src="{{asset('assets/js/datatables.min.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('assets/dist/js/adminlte.js')}}"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('[data-widget="pushmenu"]').on('click', function () {
+                $('body').toggleClass('sidebar-collapse');
+            });
+    
+            $('[data-widget="navbar-search"]').on('click', function () {
+                $('.navbar-search-block').toggleClass('show');
+            });
+        });
+    </script>
+    
     @yield('script')
 </body>
 
 </html>
+

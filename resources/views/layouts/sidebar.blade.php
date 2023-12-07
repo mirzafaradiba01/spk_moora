@@ -5,7 +5,7 @@
                 <img src="{{ asset('assets/img/logo.png') }}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a class="d-block">SPK</a>
+                <a class="d-block">SPK-MOORA</a>
             </div>
         </div>
         <nav class="mt-2">
@@ -20,7 +20,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ url('kriteriabobot') }}" class="nav-link">
-                        <i class="nav-icon fas fa-cube"></i>
+                        <i class="nav-icon fas fa-balance-scale"></i>
                         <p>
                             Kriteria & Bobot
                         </p>
@@ -28,7 +28,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ url('alternatif') }}" class="nav-link">
-                        <i class="nav-icon fas fa-cube"></i>
+                        <i class="nav-icon fas fa-list-alt"></i>
                         <p>
                             Alternatif & Skor
                         </p>
@@ -48,7 +48,7 @@
                     <a href="{{ url('normalization') }}" class="nav-link">
                         <i class="nav-icon far fa-chart-bar"></i>
                         <p>
-                            Perhitungan Moora
+                            Perhitungan MOORA
                         </p>
                     </a>
                 </li>
